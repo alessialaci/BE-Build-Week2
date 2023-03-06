@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Allerta+Stencil&display=swap');
+
+.hero {
+  background: linear-gradient(25deg, rgba(79,38,28,0.8715861344537815) 0%, rgba(144,74,57,0.7343312324929971) 56%, rgba(196,99,75,0.6671043417366946) 100%), url('https://images.pexels.com/photos/414837/pexels-photo-414837.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}
+
+.hero h1 {
+  font-family: 'Allerta Stencil', sans-serif;
+  color: white;
+  font-size: 100px;
+  text-shadow: 2px 2px 4px rgb(104, 104, 104);
+  margin: 0;
+}
+
+/* About us section */
+.about {
+  padding: 100px;
+  text-align: center;
+}
+
+.about h2 {
+  font-size: 36px;
+  margin-bottom: 50px;
+}
+
+.about p {
+  font-size: 18px;
+  line-height: 1.5;
+  width: 60%;
+  margin: 0 auto;
+}

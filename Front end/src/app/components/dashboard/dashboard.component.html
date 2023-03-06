@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="sidebar">
+    <div class="user">
+      <img class="rounded-circle mb-2" src="https://cdn.dribbble.com/users/1391977/screenshots/12030781/attachments/1512232/Attachment_1?compress=1&resize=400x300&vertical=top" alt="avatar">
+      <div class="text-user">
+        <p class="m-0">Username: {{username}}</p>
+        <p class="m-0">Email: {{email}}</p>
+      </div>
+    </div>
+    <div class="line"></div>
+    <div class="socials">
+      <a><i class="bi bi-facebook"></i></a>
+      <a><i class="bi bi-twitter"></i></a>
+      <a><i class="bi bi-instagram"></i></a>
+    </div>
+    <div class="line"></div>
+    <div class="lista">
+      <ul>
+        <a *ngIf="ruoloConnesso" class="btn" [routerLink]="['utenti']"><li>Utenti</li></a>
+        <a class="btn" [routerLink]="['fatture']"><li>Fatture</li></a>
+        <a class="btn" [routerLink]="['clienti']"><li>Clienti</li></a>
+        <a class="btn" [routerLink]="['comuni']"><li>Comuni</li></a>
+        <a class="btn" [routerLink]="['indirizzi']"><li>Indirizzi</li></a>
+        <a class="btn" [routerLink]="['province']"><li>Province</li></a>
+      </ul>
+    </div>
+  </div>
+  <div class="view">
+    <router-outlet></router-outlet>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+<nav class="navbar">
+  <div>
+    <ul>
+      <li><a routerLink="/"><img src="../../../assets/img/logo.png" width="200px"></a></li>
+    </ul>
+  </div>
+  <div *ngIf="isLoggedIn">
+    <ul>
+      <li><a [routerLink]="['/dashboard']">Dashboard</a></li>
+    </ul>
+  </div>
+  <div *ngIf="!isLoggedIn">
+    <ul>
+      <li><a [routerLink]="['/login']">Login</a></li>
+      <li><a [routerLink]="['/register']">Register</a></li>
+    </ul>
+  </div>
+  <div *ngIf="isLoggedIn">
+    <ul>
+      <li><a (click)="logout()">Logout</a></li>
+    </ul>
+  </div>
+</nav>

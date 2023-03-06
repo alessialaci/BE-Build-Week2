@@ -1,0 +1,48 @@
+<div class="content">
+  <div class="nav-content">
+    <i [routerLink]="['/dashboard']" class="bi bi-house-fill btn"></i>
+  </div>
+  <div class="title">
+    <h2>Comuni</h2>
+  </div>
+  <div class="table-content">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Nome</th>
+          <th scope="col">Codice Provincia</th>
+          <th scope="col">Progressivo Comune</th>
+          <th scope="col">Provincia</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let comune of comuni | paginate : config">
+          <th scope="row">{{ comune.id }}</th>
+          <td>{{ comune.nome }}</td>
+          <td>{{ comune.codProvincia }}</td>
+          <td>{{ comune.progComune }}</td>
+          <td>{{comune.provincia?.provincia}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="text-center mt-2">
+      <pagination-controls
+        (pageChange)="config.currentPage = $event"
+      ></pagination-controls>
+
+      <h6>
+        Pagina {{ config.currentPage }} di
+        {{
+          config.itemsPerPage * config.currentPage <= config.totalItems
+            ? config.currentPage
+            : config.totalPages
+        }},
+      </h6>
+      <h6>
+        Visualizzati {{ config.itemsPerPage }} comuni su un totale di
+        {{ config.totalItems }}.
+      </h6>
+    </div>
+  </div>
+</div>

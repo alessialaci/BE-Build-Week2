@@ -1,0 +1,215 @@
+<div class="content">
+  <div class="nav-content">
+    <i [routerLink]="['/dashboard']" class="bi bi-house-fill btn"></i>
+  </div>
+  <div class="title">
+    <h2>Clienti</h2>
+    <button *ngIf="ruoloConnesso" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#add"><i
+        class="bi bi-database-add" data-bs-toggle="modal" data-bs-target="#add"></i></button>
+  </div>
+  <div class="table-content ">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Ragione Sociale</th>
+          <th scope="col">Partita IVA</th>
+          <th scope="col">Email</th>
+          <th scope="col">Data Inserimento</th>
+          <th scope="col">Data Ultimo Contatto</th>
+          <th scope="col">Fatturato Annuale</th>
+          <th scope="col">Pec</th>
+          <th scope="col">Telefono</th>
+          <th scope="col">Email Contatto</th>
+          <th scope="col">Nome Contatto</th>
+          <th scope="col">Cognome Contatto</th>
+          <th scope="col">Telefono Contatto</th>
+          <th scope="col">Tipo Cliente</th>
+          <th scope="col">Sede Legale</th>
+          <th scope="col">Sede Operativa</th>
+          <th *ngIf="ruoloConnesso" scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cliente of clienti | paginate : config">
+          <th scope="row">{{cliente.id}}</th>
+          <td>{{cliente.ragioneSociale}}</td>
+          <td>{{cliente.partitaIva}}</td>
+          <td>{{cliente.email}}</td>
+          <td>{{cliente.dataInserimento}}</td>
+          <td>{{cliente.dataUltimoContatto}}</td>
+          <td>{{cliente.fatturatoAnnuale}}</td>
+          <td>{{cliente.pec}}</td>
+          <td>{{cliente.telefono}}</td>
+          <td>{{cliente.emailContatto}}</td>
+          <td>{{cliente.nomeContatto}}</td>
+          <td>{{cliente.cognomeContatto}}</td>
+          <td>{{cliente.telefonoContatto}}</td>
+          <td>{{cliente.tipoCliente}}</td>
+          <td>{{cliente.sedeLegale.comune.nome}}</td>
+          <td>{{cliente.sedeOperativa.comune.nome}}</td>
+          <td *ngIf="ruoloConnesso">
+            <!-- BUTTON PUT NON IMPLEMENTATO -->
+            <!-- <button type="button" class="btn btn-danger mb-1" data-bs-toggle="modal" data-bs-target="#edit">
+              <i class="bi bi-pencil"></i>
+            </button> -->
+              <i class="bi bi-trash3-fill btn btn-danger mb-1" (click)="deleteCliente(cliente.id)"></i>
+          </td>
+
+        </tr>
+      </tbody>
+
+      <!-- MODALE AGGIUNGI CLIENTE -->
+      <div class="modal fade" id="add" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">Aggiungi Cliente</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form #formAdd="ngForm" (ngSubmit)="addCliente(formAdd)" id="formModal">
+                <div class="form-floating form-group mb-3">
+                  <input name="ragioneSociale" type="text" class="form-control" id="ragioneSociale" placeholder="ragioneSociale" required ngModel>
+                  <label for="ragioneSociale">Ragione Sociale</label>
+                </div>
+                <div class="form-floating form-group mb-3">
+                  <input name="partitaIva" type="number" class="form-control" id="partitaIva" placeholder="partitaIva" required ngModel>
+                  <label for="partitaIva">Partita Iva</label>
+                </div>
+                <div class="form-floating form-group mb-3">
+                  <input name="email" type="email" class="form-control" id="email" placeholder="name@example.com" required ngModel>
+                  <label for="email">Email</label>
+                </div>
+                <div class="form-floating form-group mb-3">
+                  <input name="fatturatoAnnuale" type="number" class="form-control" id="fatturatoAnnuale" placeholder="fatturatoAnnuale" required ngModel>
+                  <label for="fatturatoAnnuale">Fatturato Annuale</label>
+                </div>
+                <div class="form-floating form-group mb-3">
+                  <input name="pec" type="email" class="form-control" id="pec" placeholder="name@pec.com" required ngModel>
+                  <label for="pec">Pec</label>
+                </div>
+                <div class="form-floating form-group mb-3">
+                  <input name="telefono" type="number" class="form-control" id="telefono" placeholder="telefono" required ngModel>
+                  <label for="telefono">Partita Iva</label>
+                </div>
+                <div class="form-floating form-group mb-3">
+                  <input name="emailContatto" type="email" class="form-control" id="emailContatto" placeholder="name@example.com" required ngModel>
+                  <label for="emailContatto">Email Contatto</label>
+                </div>
+                <div class="form-floating form-group mb-3">
+                  <input name="nomeContatto" type="text" class="form-control" id="nomeContatto" placeholder="nomeContatto" required ngModel>
+                  <label for="nomeContatto">Nome Contatto</label>
+                </div>
+                <div class="form-floating form-group mb-3">
+                  <input name="cognomeContatto" type="text" class="form-control" id="cognomeContatto" placeholder="cognomeContatto" required ngModel>
+                  <label for="cognomeContatto">Cognome Contatto</label>
+                </div>
+                <div class="form-floating form-group mb-3">
+                  <input name="dataUltimoContatto" type="date" class="form-control" id="dataUltimoContatto" placeholder="dataUltimoContatto" required ngModel>
+                  <label for="dataUltimoContatto">Data Ultimo Contatto</label>
+                </div>
+                <div class="form-floating form-group mb-3">
+                  <input name="telefonoContatto" type="number" class="form-control" id="telefonoContatto" placeholder="telefonoContatto" required ngModel>
+                  <label for="telefonoContatto">Telefono Contatto</label>
+                </div>
+                <div class="form-floating form-group mb-3">
+                  <input name="tipoCliente" type="text" class="form-control" id="tipoCliente" placeholder="tipoCliente" required ngModel>
+                  <label for="tipoCliente">Tipo Cliente</label>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="clear">Annulla</button>
+              <button type="button" class="btn btn-danger" [disabled]="formAdd.invalid" (click)="addCliente(formAdd)">Conferma</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODALE MODIFICA CLIENTE -->
+      <div class="modal fade" id="edit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">Modifica Clienti</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form #formEdit="ngForm" (ngSubmit)="updateCliente(formEdit)">
+                <div class="form-floating form-group mb-3">
+                  <input name="ragioneSociale" type="text" class="form-control" id="ragioneSociale" placeholder="ragioneSociale" required ngModel>
+                  <label for="ragioneSociale">Ragione Sociale</label>
+                </div>
+                <div class="form-floating form-group mb-3">
+                  <input name="partitaIva" type="number" class="form-control" id="partitaIva" placeholder="partitaIva" required ngModel>
+                  <label for="partitaIva">Partita Iva</label>
+                </div>
+                <div class="form-floating form-group mb-3">
+                  <input name="email" type="email" class="form-control" id="email" placeholder="name@example.com" required ngModel>
+                  <label for="email">Email</label>
+                </div>
+                <div class="form-floating form-group mb-3">
+                  <input name="fatturatoAnnuale" type="number" class="form-control" id="fatturatoAnnuale" placeholder="fatturatoAnnuale" required ngModel>
+                  <label for="fatturatoAnnuale">Fatturato Annuale</label>
+                </div>
+                <div class="form-floating form-group mb-3">
+                  <input name="pec" type="email" class="form-control" id="pec" placeholder="name@pec.com" required ngModel>
+                  <label for="pec">Pec</label>
+                </div>
+                <div class="form-floating form-group mb-3">
+                  <input name="telefono" type="number" class="form-control" id="telefono" placeholder="telefono" required ngModel>
+                  <label for="telefono">Partita Iva</label>
+                </div>
+                <div class="form-floating form-group mb-3">
+                  <input name="emailContatto" type="email" class="form-control" id="emailContatto" placeholder="name@example.com" required ngModel>
+                  <label for="emailContatto">Email Contatto</label>
+                </div>
+                <div class="form-floating form-group mb-3">
+                  <input name="nomeContatto" type="text" class="form-control" id="nomeContatto" placeholder="nomeContatto" required ngModel>
+                  <label for="nomeContatto">Nome Contatto</label>
+                </div>
+                <div class="form-floating form-group mb-3">
+                  <input name="cognomeContatto" type="text" class="form-control" id="cognomeContatto" placeholder="cognomeContatto" required ngModel>
+                  <label for="cognomeContatto">Cognome Contatto</label>
+                </div>
+                <div class="form-floating form-group mb-3">
+                  <input name="telefonoContatto" type="number" class="form-control" id="telefonoContatto" placeholder="telefonoContatto" required ngModel>
+                  <label for="telefonoContatto">Telefono Contatto</label>
+                </div>
+                <div class="form-floating form-group mb-3">
+                  <input name="tipoCliente" type="text" class="form-control" id="tipoCliente" placeholder="tipoCliente" required ngModel>
+                  <label for="tipoCliente">Tipo Cliente</label>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+              <button type="button" class="btn btn-primary" (click)="addCliente(formEdit)">Conferma</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </table>
+    <div class="text-center mt-2">
+      <pagination-controls
+        (pageChange)="config.currentPage = $event"
+      ></pagination-controls>
+
+      <h6>
+        Pagina {{ config.currentPage }} di
+        {{
+          config.itemsPerPage * config.currentPage <= config.totalItems
+            ? config.currentPage
+            : config.totalPages
+        }},
+      </h6>
+      <h6>
+        Visualizzati {{ config.itemsPerPage }} clienti su un totale di
+        {{ config.totalItems }}.
+      </h6>
+    </div>
+  </div>
+</div>

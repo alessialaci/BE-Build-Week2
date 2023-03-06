@@ -1,0 +1,134 @@
+<div class="content">
+  <div class="nav-content">
+    <i [routerLink]="['/dashboard']" class="bi bi-house-fill btn"></i>
+  </div>
+  <div class="title">
+    <h2>Indirizzi</h2>
+    <button *ngIf="ruoloConnesso" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#add"><i
+        class="bi bi-database-add" data-bs-toggle="modal" data-bs-target="#add"></i></button>
+  </div>
+  <div class="table-content">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Via</th>
+          <th scope="col">Civico</th>
+          <th scope="col">Località</th>
+          <th scope="col">Cap</th>
+          <th scope="col">Comune</th>
+          <th *ngIf="ruoloConnesso" scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let indirizzo of indirizzi | paginate : config">
+          <th scope="row">{{indirizzo.id}}</th>
+          <td>{{indirizzo.via}}</td>
+          <td>{{indirizzo.civico}}</td>
+          <td>{{indirizzo.localita}}</td>
+          <td>{{indirizzo.cap}}</td>
+          <td>{{indirizzo.comune.nome}}</td>
+          <td *ngIf="ruoloConnesso">
+            <!-- BOTTONE PUT NON IMPLEMENTATO -->
+            <!-- <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#edit">
+              <i class="bi bi-pencil"></i>
+            </button> -->
+            <i class="bi bi-trash3-fill btn btn-danger" (click)="deleteIndirizzo(indirizzo.id)"></i>
+          </td>
+        </tr>
+      </tbody>
+
+      <!-- MODALE AGGIUNGI INDIRIZZO -->
+      <div class="modal fade" id="add" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">Aggiungi Indirizzo</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form #formAdd="ngForm" id="formModal2" (ngSubmit)="addIndirizzo(formAdd)">
+                <div class="form-floating form-group mb-3">
+                  <input name="via" type="text" class="form-control" id="via" placeholder="via" required ngModel>
+                  <label for="via">Via</label>
+                </div>
+                <div class="form-floating form-group mb-3">
+                  <input name="civico" type="number" class="form-control" id="civico" placeholder="civico" required ngModel>
+                  <label for="civico">Civico</label>
+                </div>
+                <div class="form-floating form-group mb-3">
+                  <input name="localita" type="text" class="form-control" id="localita" placeholder="localita" required ngModel>
+                  <label for="localita">Località</label>
+                </div>
+                <div class="form-floating form-group mb-3">
+                  <input name="cap" type="number" class="form-control" id="cap" placeholder="cap" required ngModel>
+                  <label for="cap">Cap</label>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="clear2">Annulla</button>
+              <button type="button" class="btn btn-danger" [disabled]="formAdd.invalid" (click)="addIndirizzo(formAdd)">Conferma</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODALE MODIFICA INDIRIZZO -->
+      <div class="modal fade" id="edit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">Modifica Indirizzo</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form #formEdit="ngForm" (ngSubmit)="updateIndirizzo(formEdit)">
+                <div class="form-floating form-group mb-3">
+                  <input name="via" type="text" class="form-control" id="via" placeholder="via" required ngModel>
+                  <label for="via">Via</label>
+                </div>
+                <div class="form-floating form-group mb-3">
+                  <input name="civico" type="number" class="form-control" id="civico" placeholder="civico" required ngModel>
+                  <label for="civico">Civico</label>
+                </div>
+                <div class="form-floating form-group mb-3">
+                  <input name="localita" type="text" class="form-control" id="localita" placeholder="localita" required ngModel>
+                  <label for="localita">Località</label>
+                </div>
+                <div class="form-floating form-group mb-3">
+                  <input name="cap" type="number" class="form-control" id="cap" placeholder="cap" required ngModel>
+                  <label for="cap">Cap</label>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+              <button type="button" class="btn btn-danger">Conferma</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </table>
+    <div class="text-center mt-2">
+      <pagination-controls
+        (pageChange)="config.currentPage = $event"
+      ></pagination-controls>
+
+      <h6>
+        Pagina {{ config.currentPage }} di
+        {{
+          config.itemsPerPage * config.currentPage <= config.totalItems
+            ? config.currentPage
+            : config.totalPages
+        }},
+      </h6>
+      <h6>
+        Visualizzati {{ config.itemsPerPage }} indirizzi su un totale di
+        {{ config.totalItems }}.
+      </h6>
+    </div>
+  </div>
+</div>

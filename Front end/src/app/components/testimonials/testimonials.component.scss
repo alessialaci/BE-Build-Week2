@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Secular+One&display=swap');
+
+#testimonials{
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+#testimonials .card{
+  padding: 30px;
+  width: 20%;
+  border: none;
+}
+
+#testimonials .card:hover{
+  color: #fff;
+  background-color: #c4634b;
+  transition: 0.5s;
+  border-radius: 0px 70px 0px 70px;
+}
+
+
+span{
+  font-family: 'Secular One', sans-serif;
+  font-size: 50px;
+  margin: 0;
+}

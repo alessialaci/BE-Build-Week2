@@ -1,0 +1,143 @@
+<div class="content">
+  <div class="nav-content">
+    <i [routerLink]="['/dashboard']" class="bi bi-house-fill btn"></i>
+  </div>
+  <div class="title">
+    <h2>Fatture</h2>
+    <button *ngIf="ruoloConnesso" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#add">
+      <i class="bi bi-database-add" data-bs-toggle="modal" data-bs-target="#add"></i>
+    </button>
+  </div>
+  <div class="table-content">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Numero</th>
+          <th scope="col">Anno</th>
+          <th scope="col">Data</th>
+          <th scope="col">Importo</th>
+          <th scope="col">Stato</th>
+          <th *ngIf="ruoloConnesso" scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let fattura of fatture | paginate : config">
+          <th scope="row">{{fattura.id}}</th>
+          <td>{{fattura.numero}}</td>
+          <td>{{fattura.anno}}</td>
+          <td>{{fattura.data}}</td>
+          <td>&euro; {{fattura.importo}}</td>
+          <td>{{fattura.statoFattura}}</td>
+          <td *ngIf="ruoloConnesso">
+            <!-- BOTTONE PUT NON IMPLEMENTATO -->
+            <!-- <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#edit">
+              <i class="bi bi-pencil"></i>
+            </button> -->
+            <i class="bi bi-trash3-fill btn btn-danger" (click)="deleteFattura(fattura.id)"></i>
+          </td>
+
+          <!-- MODALE MODIFICA FATTURA -->
+          <div class="modal fade" id="edit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="staticBackdropLabel">Modifica Fattura</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form #formEdit="ngForm">
+                    <div class="form-floating form-group mb-3">
+                      <input name="numero" type="number" class="form-control" id="numero" placeholder="numero" required
+                        ngModel>
+                      <label for="numero">Numero</label>
+                    </div>
+                    <div class="form-floating form-group mb-3">
+                      <input name="anno" type="number" class="form-control" id="anno" placeholder="name@example.com"
+                        required ngModel>
+                      <label for="anno">Anno</label>
+                    </div>
+                    <div class="form-floating form-group mb-3">
+                      <input name="data" type="date" class="form-control" id="data" placeholder="data" required ngModel>
+                      <label for="data">Data</label>
+                    </div>
+                    <div class="form-floating form-group mb-3">
+                      <input name="importo" type="number" class="form-control" id="importo" placeholder="importo" required
+                        ngModel>
+                      <label for="importo">Importo</label>
+                    </div>
+                    <div class="form-floating form-group mb-3">
+                      <label for="stato">Stato Fattura</label>
+                      <select id="stato" class="form-select">
+                        <option value=""></option>
+                        <option value="PAGATA">Pagata</option>
+                        <option value="DA_PAGARE">Da pagare</option>
+                        <option value="SCADURA">Scaduta</option>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                  <button type="button" class="btn btn-danger" (click)="updateFattura(formEdit, fattura.id)">Conferma</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </tr>
+      </tbody>
+
+      <!-- MODALE AGGIUNGI FATTURA -->
+      <div class="modal fade" id="add" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">Aggiungi Fattura</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form #formAdd="ngForm" id="formModal1">
+                <div class="form-floating form-group mb-3">
+                  <input name="numero" type="number" class="form-control" id="numero" placeholder="numero" required
+                    ngModel>
+                  <label for="numero">Numero</label>
+                </div>
+                <div class="form-floating form-group mb-3">
+                  <input name="anno" type="number" class="form-control" id="anno" placeholder="anno" required ngModel>
+                  <label for="anno">Anno</label>
+                </div>
+                <div class="form-floating form-group mb-3">
+                  <input name="data" type="date" class="form-control" id="data" placeholder="data" required ngModel>
+                  <label for="data">Data</label>
+                </div>
+                <div class="form-floating form-group mb-3">
+                  <input name="importo" type="number" class="form-control" id="importo" placeholder="importo" required
+                    ngModel>
+                  <label for="importo">Importo</label>
+                </div>
+                <div class="form-floating form-group mb-3">
+                  <label for="stato">Stato Fattura</label>
+                  <select id="stato" class="form-select">
+                    <option value=""></option>
+                    <option value="PAGATA">Pagata</option>
+                    <option value="DA_PAGARE">Da pagare</option>
+                    <option value="SCADURA">Scaduta</option>
+                  </select>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="clear1">Annulla</button>
+              <button type="button" class="btn btn-danger" [disabled]="formAdd.invalid" (click)="addFattura(formAdd)">Conferma</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </table>
+    <div class="text-center mt-2">
+      <pagination-controls (pageChange)="config.currentPage = $event"></pagination-controls>
+    </div>
+  </div>
+</div>

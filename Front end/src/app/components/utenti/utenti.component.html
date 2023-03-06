@@ -1,0 +1,138 @@
+<div class="content">
+  <div class="nav-content">
+    <i [routerLink]="['/dashboard']" class="bi bi-house-fill btn"></i>
+  </div>
+  <div class="title">
+    <h2>Utenti</h2>
+    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#add">
+      <i class="bi bi-database-add" data-bs-toggle="modal" data-bs-target="#add"></i>
+    </button>
+  </div>
+  <div class="table-content">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Nome</th>
+          <th scope="col">Cognome</th>
+          <th scope="col">Email</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users | paginate : config">
+          <th scope="row">{{user.id}}</th>
+          <td>{{user.nome}}</td>
+          <td>{{user.cognome}}</td>
+          <td>{{user.email}}</td>
+          <td>
+            <!-- BOTTONE PUT NON IMPLEMENTATO -->
+            <!-- <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#edit">
+              <i class="bi bi-pencil"></i>
+            </button> -->
+            <i class="bi bi-trash3-fill btn btn-danger" (click)="deleteUtente(user.id)"></i>
+          </td>
+        </tr>
+      </tbody>
+      <!-- MODALE AGGIUNGI UTENTE -->
+      <div class="modal fade" id="add" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">Aggiungi Utenti</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form #formAdd="ngForm" (ngSubmit)="addUtente(formAdd)" id="formModal3">
+                <div class="form-floating form-group mb-3">
+                  <input name="nome" type="text" class="form-control" id="nome" placeholder="nome" required ngModel>
+                  <label for="nome">Nome</label>
+                </div>
+                <div class="form-floating form-group mb-3">
+                  <input name="cognome" type="text" class="form-control" id="cognome" placeholder="cognome" required ngModel>
+                  <label for="cognome">Cognome</label>
+                </div>
+                <div class="form-floating form-group mb-3">
+                  <input name="username" type="text" class="form-control" id="username" placeholder="username" required ngModel>
+                  <label for="username">Username</label>
+                </div>
+                <div class="form-floating form-group mb-3">
+                  <input name="email" type="text" class="form-control" id="email" placeholder="name@example.com" required ngModel>
+                  <label for="email">Email</label>
+                </div>
+                <div class="form-floating form-group mb-3">
+                  <input name="password" type="password" class="form-control" id="password" placeholder="password" required ngModel>
+                  <label for="password">Password</label>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="clear3">Annulla</button>
+              <button type="button" class="btn btn-danger" [disabled]="formAdd.invalid" (click)="addUtente(formAdd)">Conferma</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODALE MODIFICA UTENTE -->
+      <div class="modal fade" id="edit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">Modifica Utenti</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form #formEdit="ngForm" (ngSubmit)="updateUtente(formEdit)">
+                <div class="form-floating form-group mb-3">
+                  <input name="nome" type="text" class="form-control" id="nome" placeholder="nome" required ngModel>
+                  <label for="nome">Nome</label>
+                </div>
+                <div class="form-floating form-group mb-3">
+                  <input name="cognome" type="text" class="form-control" id="cognome" placeholder="cognome" required ngModel>
+                  <label for="cognome">Cognome</label>
+                </div>
+                <div class="form-floating form-group mb-3">
+                  <input name="username" type="text" class="form-control" id="username" placeholder="username" required ngModel>
+                  <label for="username">Username</label>
+                </div>
+                <div class="form-floating form-group mb-3">
+                  <input name="email" type="text" class="form-control" id="email" placeholder="name@example.com" required ngModel>
+                  <label for="email">Email</label>
+                </div>
+                <div class="form-floating form-group mb-3">
+                  <input name="password" type="password" class="form-control" id="password" placeholder="password" required ngModel>
+                  <label for="password">Password</label>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+              <button type="button" class="btn btn-danger">Conferma</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </table>
+    <div class="text-center mt-2">
+      <pagination-controls
+        (pageChange)="config.currentPage = $event"
+      ></pagination-controls>
+
+      <h6>
+        Pagina {{ config.currentPage }} di
+        {{
+          config.itemsPerPage * config.currentPage <= config.totalItems
+            ? config.currentPage
+            : config.totalPages
+        }},
+      </h6>
+      <h6>
+        Visualizzati {{ config.itemsPerPage }} utenti su un totale di
+        {{ config.totalItems }}.
+      </h6>
+    </div>
+  </div>
+</div>
