@@ -20,9 +20,9 @@ Per Angular:
 ## Tutte le routes
 
 ### Libere
-/home (libera)
-/auth/login (libera)
-/auth/logout (libera?)
+/home (libera)  
+/auth/login (libera)  
+/auth/logout (libera?)  
   
   
 ### Chiamate CRUD
@@ -33,49 +33,54 @@ Per Angular:
 - POST (admin)
 - DELETE (admin)
 
-/utenti
-/utenti/{id}
-/utenti_page
-
-/comuni
-/comuni/{id}
-/comuni_page
-
-/province
-/province/{id}
-/province_page
-
-/indirizzi
-/indirizzi/{id}
-/indirizzi/page
-
-/fatture
-/fatture/{id}
-/fatture_page
-
-/clienti
-/clienti/{id}
-/clienti_page
+/utenti  
+/utenti/{id}  
+/utenti_page  
+  
+  
+/comuni  
+/comuni/{id}  
+/comuni_page  
+  
+  
+/province  
+/province/{id}  
+/province_page  
+  
+  
+/indirizzi  
+/indirizzi/{id}  
+/indirizzi/page  
+  
+  
+/fatture  
+/fatture/{id}  
+/fatture_page  
+  
+  
+/clienti  
+/clienti/{id}  
+/clienti_page  
   
   
 ### Filtra clienti in base a:
-/clienti/cercaFatturato
-/clienti/cercaDataInserimento
-/clienti/cercaDataUltimoContatto
-/clienti/cercaNome
+/clienti/cercaFatturato  
+/clienti/cercaDataInserimento  
+/clienti/cercaDataUltimoContatto  
+/clienti/cercaNome  
   
   
 ### Ordina clienti in base al parametro:
-/clienti_page?page=0&size=3&sort=ragioneSociale
-/clienti_page?page=0&size=3&sort=fatturatoAnnuale
-/clienti_page?page=0&size=3&sort=dataInserimento
-/clienti_page?page=0&size=3&sort=dataUltimoContatto
-/clienti/ordinaPerSedeLegale
+/clienti_page?page=0&size=3&sort=ragioneSociale  
+/clienti_page?page=0&size=3&sort=fatturatoAnnuale  
+/clienti_page?page=0&size=3&sort=dataInserimento  
+/clienti_page?page=0&size=3&sort=dataUltimoContatto  
+/clienti/ordinaPerSedeLegale  
   
   
 ### Filtra fatture in base a:
-/fatture/cercaCliente?cliente=1
-/fatture/cercaStato?stato=PAGATA
-/fatture/cercaData?data=2021-05-12
-/fatture/cercaAnno?anno=2021
-/fatture/cercaImporto?min=500&max=2000
+/fatture/cercaCliente?cliente=1  
+/fatture/cercaStato?stato=PAGATA  
+/fatture/cercaData?data=2021-05-12  
+/fatture/cercaAnno?anno=2021  
+/fatture/cercaImporto?min=500&max=2000  
